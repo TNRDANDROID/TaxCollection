@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">TaxCollection</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+    <string name="tax_Collection">TaxCollection</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="init_vector">2SN22SkJGDyOAXUU</string>
+    <string name="hello">Hello</string>
+    <string name="welcome">Welcome</string>
+    <string name="signin">SignIn</string>
+    <string name="signup">SignUp</string>
+    <string name="user_name">user name</string>
+    <string name="don_t_have_an_account">Don\'t have an account ? </string>
+    <string name="password">Password</string>
 </resources>
