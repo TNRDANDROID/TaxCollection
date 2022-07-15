@@ -72,7 +72,13 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-
+    allprojects {
+        repositories {
+            maven {
+                url "https://jitpack.io"
+            }
+        }
+    }
 }
 
 dependencies {
@@ -85,6 +91,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation files('libs/volley.jar')
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    //show_hidepassword_edittext
+    implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
 
     //size
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
