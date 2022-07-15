@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.dataBase.DBHelper;
 import com.nic.taxcollection.dataBase.dbData;
-import com.nic.taxcollection.databinding.TaxItemViewBinding;
 import com.nic.taxcollection.model.Tax;
 
 import java.util.List;
@@ -46,14 +45,13 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
         if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
-        TaxItemViewBinding taxItemViewBinding =
-                DataBindingUtil.inflate(layoutInflater, R.layout.tax_item_view, parent, false);
-        return new MyViewHolder(taxItemViewBinding);
+
+        return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaxCollectionAdapter.MyViewHolder holder, int position) {
-        holder.taxItemViewBinding.taxName.setText(taxList.get(position).getTaxName());
+
 
     }
 
@@ -64,11 +62,9 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TaxItemViewBinding taxItemViewBinding;
 
-        public MyViewHolder(TaxItemViewBinding Binding) {
-            super(Binding.getRoot());
-            taxItemViewBinding = Binding;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
     }
 
