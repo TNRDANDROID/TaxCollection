@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
@@ -45,6 +46,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     public com.nic.taxcollection.dataBase.dbData dbData = new dbData(this);
     ArrayList<Tax> taxList;
     TaxCollectionAdapter taxCollectionAdapter;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,24 +62,36 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
             e.printStackTrace();
         }
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView=findViewById(R.id.recycler);
+//        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),1);
+//        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setFocusable(false);
+
+//        getTaxCollection();
+
+        JSONObject jsonObject = new JSONObject();
+        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"Property tax\"},{\"id\":2,\"tax\":\"Water tax\"},{\"id\":3,\"tax\":\"Sales tax\"},{\"id\":4,\"tax\":\"Income tax\"},{\"id\":5,\"tax\":\"non tax\"}]}";
+        try {  jsonObject = new JSONObject(json); } catch (Throwable t) {
+            Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
 
 
-        getTaxCollection();
-
-        taxList = new ArrayList<>();
-        dbData.open();
-        taxList.addAll(dbData.get_tax_type());
-        Log.d("Size",""+taxList.size());
-
-        taxCollectionAdapter = new TaxCollectionAdapter(taxList,context,dbData);
-
+        try {
+            if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
+                new Insert_TaxCollection().execute(jsonObject);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public  void getTaxCollection() {
         try {
-            new ApiService(this).makeJSONObjectRequest("TaxCollection", Api.Method.POST, UrlGenerator.getAppMainServiceUrl(), taxCollectionJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("TaxCollection", Api.Method.POST, UrlGenerator.getLoginUrl(), taxCollectionJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -100,23 +114,18 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
-//            JSONObject response = serverResponse.getJsonResponse();
-
-            JSONObject response = new JSONObject();
-            String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"property\"},{\"id\":2,\"tax\":\"nontax\"}]}";
-            try {  response = new JSONObject(json); } catch (Throwable t) {
-                Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
-
+            JSONObject response = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
 
             if ("TaxCollection".equals(urlType) && response != null) {
                 String key = response.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
+
                 if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
                     new Insert_TaxCollection().execute(jsonObject);
                 }
-                Log.d("TaxCollection", "" + responseDecryptedBlockKey);
+                Log.d("TaxCollection", "" + jsonObject);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -156,6 +165,9 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
                     }
 
                 }
+
+
+
             }
 
 
@@ -167,6 +179,13 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            taxList = new ArrayList<>();
+            dbData.open();
+            taxList.addAll(dbData.get_tax_type());
+            Log.d("Size",""+taxList.size());
+
+            taxCollectionAdapter = new TaxCollectionAdapter(DashboardActivity.this,taxList);
+            recyclerView.setAdapter(taxCollectionAdapter);
         }
     }
 

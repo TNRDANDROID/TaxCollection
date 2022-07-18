@@ -85,16 +85,15 @@
 
 
         ///back ground drawable
-<!--
         <RelativeLayout
 
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
+                android:background="@drawable/ic_wave3"
                 android:layout_height="match_parent">
 
 
@@ -102,46 +101,18 @@
                     android:id="@+id/circle1"
                     android:layout_width="134dp"
                     android:layout_height="134dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/_125sdp"
-                    android:layout_marginRight="-100dp"
-                    android:src="@drawable/circletransparant" />
-
-                <ImageView
-                    android:id="@+id/circle2"
-                    android:layout_width="134dp"
-                    android:layout_height="134dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="-100dp"
-                    android:layout_marginBottom="50dp"
-                    android:src="@drawable/circletransparant" />
+                    android:layout_marginStart="59dp"
+                    android:layout_marginLeft="59dp"
+                    android:layout_marginBottom="109dp"
+                    android:src="@drawable/tax_logo" />
 
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/circle3"
-                    android:layout_width="162dp"
-                    android:layout_height="162dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="-80dp"
-                    android:layout_marginBottom="-30dp"
-                    android:src="@drawable/circle" />
-
-                <ImageView
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/circle4"
-                    android:layout_width="124dp"
-                    android:layout_height="124dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="-50dp"
-                    android:layout_marginBottom="-50dp"
-                    android:layout_toLeftOf="@+id/circle3"
-                    android:src="@drawable/circletransparant" />
 
             </RelativeLayout>
 
         </RelativeLayout>
--->
 
         <LinearLayout
             android:layout_below="@+id/img_rll"
@@ -160,16 +131,16 @@
                 android:layout_marginBottom="0dp"
                 android:gravity="center">
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recycler"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
                     android:scrollbarSize="1dp"
-                    android:paddingLeft="@dimen/_20sdp"
-                    android:paddingRight="@dimen/_20sdp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:visibility="visible"
-                    android:scrollbars="vertical"/>
+                    android:scrollbars="vertical"
+                    android:visibility="visible" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

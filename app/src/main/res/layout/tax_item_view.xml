@@ -6,32 +6,84 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
             android:layout_marginTop="@dimen/_7sdp"
             android:layout_marginBottom="@dimen/_7sdp"
             >
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/taxName"
-                    android:gravity="start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
-                    android:singleLine="true"
-                    android:minWidth="100dp"
-                    android:minLines="1"
-                    android:text="tax"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorPrimary" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:id="@+id/card_view"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_7sdp"
+                app:cardElevation="@dimen/_7sdp">
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tax_layout"
+                    android:background="@drawable/cerclebackgroundgreen">
+
+
+                            <RelativeLayout
+                                android:id="@+id/batch_image_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:layout_width="@dimen/_100sdp"
+                                    android:layout_height="@dimen/_80sdp"
+                                    android:src="@drawable/tax_img"
+                                    android:id="@+id/tree_image"
+                                    android:padding="@dimen/_5sdp"
+                                    android:scaleType="fitXY"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:layout_width="@dimen/_100sdp"
+                                    android:layout_height="@dimen/_80sdp"
+                                    android:src="@drawable/rupee"
+                                    android:id="@+id/curr_image"
+                                    android:layout_alignParentRight="true"
+                                    android:padding="@dimen/_5sdp"
+                                    android:scaleType="fitXY"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:layout_width="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:src="@drawable/ic_back"
+                                    android:id="@+id/go_image"
+                                    android:rotation="180"
+                                    android:tint="@color/white"
+                                    android:layout_margin="@dimen/_3sdp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:scaleType="fitXY"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_below="@+id/taxName"
+                                    tools:ignore="ContentDescription" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/tax_Collection"
+                                    android:textStyle="bold"
+                                    android:id="@+id/taxName"
+                                    android:layout_margin="@dimen/_10sdp"
+                                    android:layout_below="@+id/tree_image"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16sdp"/>
+
+                            </RelativeLayout>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
     </RelativeLayout>

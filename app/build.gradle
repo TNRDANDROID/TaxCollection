@@ -91,7 +91,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation files('libs/volley.jar')
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-
+    implementation 'androidx.cardview:cardview:1.0.0'
     //show_hidepassword_edittext
     implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
 

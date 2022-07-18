@@ -1,72 +1,80 @@
 package com.nic.taxcollection.Adapter;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nic.taxcollection.R;
-import com.nic.taxcollection.dataBase.DBHelper;
-import com.nic.taxcollection.dataBase.dbData;
 import com.nic.taxcollection.model.Tax;
+import java.util.ArrayList;
 
-import java.util.List;
 
-public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdapter.MyViewHolder> {
+public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdapter.SummaryViewHolder>{
+    private Activity activity;
+    private ArrayList<Tax> taxArrayList;
+    LayoutInflater mInflater;
 
-    private List<Tax> taxList;
-    private Context context;
-    private LayoutInflater layoutInflater;
-    com.nic.taxcollection.dataBase.dbData dbData;
-    public DBHelper dbHelper;
-    public SQLiteDatabase db;
 
-    public TaxCollectionAdapter(List<Tax> taxList, Context context,dbData dbData) {
-        this.taxList = taxList;
-        this.context = context;
-        this.dbData=dbData;
+    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList) {
+        this.activity=activity;
+        this.taxArrayList=taxArrayList;
+        mInflater = LayoutInflater.from(activity);
+    }
+    @Override
+    public SummaryViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
+
+        ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
+                R.layout.tax_item_view, viewGroup, false);
+        SummaryViewHolder mainHolder = new SummaryViewHolder(mainGroup) {
+            @Override
+            public String toString() {
+                return super.toString();
+            }
+        };
+        return mainHolder;
+    }
+    @Override
+    public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-            dbHelper = new DBHelper(context);
-            db = dbHelper.getWritableDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
+            if(position%2==0){
+                holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundpurple));
+            }else  {
+                holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundyello));
+
+            }
+            holder.name.setText(taxArrayList.get(position).getTaxName());
+
+
+        } catch (Exception exp){
+            exp.printStackTrace();
         }
     }
 
-    @NonNull
-    @Override
-    public TaxCollectionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (layoutInflater == null) {
-            layoutInflater = LayoutInflater.from(parent.getContext());
-        }
-
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull TaxCollectionAdapter.MyViewHolder holder, int position) {
-
-
-    }
 
     @Override
     public int getItemCount() {
-        return taxList.size();
+
+        return taxArrayList.size();
     }
+    class SummaryViewHolder extends RecyclerView.ViewHolder {
+        TextView name;
+        RelativeLayout tax_layout;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+        SummaryViewHolder(View view) {
+            super(view);
+            name=(TextView)view.findViewById(R.id.taxName);
+            tax_layout=(RelativeLayout)view.findViewById(R.id.tax_layout);
 
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
         }
     }
+
 
 
 }
