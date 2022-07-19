@@ -72,13 +72,13 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
     class SummaryViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         ImageView tax_img;
-        RelativeLayout tax_layout;
+        //RelativeLayout tax_layout;
 
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.taxName);
             tax_img=(ImageView)view.findViewById(R.id.tax_img);
-            tax_layout=(RelativeLayout)view.findViewById(R.id.tax_layout);
+            //tax_layout=(RelativeLayout)view.findViewById(R.id.tax_layout);
 
         }
     }
