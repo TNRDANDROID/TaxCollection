@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+ <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_60sdp"
+     android:layout_toRightOf="@+id/img_layout"
+    android:layout_marginLeft="-40dp"
+    android:layout_marginTop="@dimen/_7sdp"
+    android:layout_marginBottom="@dimen/_7sdp"
+    android:layout_marginRight="@dimen/_7sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
+     android:layout_centerVertical="true"
+    app:cardElevation="@dimen/_7sdp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/taxName"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:text="@string/tax_Collection"
+                android:layout_centerHorizontal="true"
+               />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginLeft="@dimen/_7sdp"
+        android:layout_centerVertical="true"
+        android:id="@+id/img_layout"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
+        android:layout_marginRight="@dimen/_7sdp"
+        app:cardCornerRadius="@dimen/_90sdp"
+        app:cardElevation="@dimen/_7sdp">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:id="@+id/tax_img"
+                android:layout_centerInParent="true"
+                android:src="@drawable/property_tax"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -66,9 +66,9 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
         }
 
         recyclerView=findViewById(R.id.recycler);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+       /* RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView.setLayoutManager(mLayoutManager);*/
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         //snapHelper = new PagerSnapHelper();
         //snapHelper.attachToRecyclerView(recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

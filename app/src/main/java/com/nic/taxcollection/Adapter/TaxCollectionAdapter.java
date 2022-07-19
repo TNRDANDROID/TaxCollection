@@ -34,7 +34,7 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
         LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
 
         ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
-                R.layout.new_tax_item_view, viewGroup, false);
+                R.layout.tax_item_view_2, viewGroup, false);
         SummaryViewHolder mainHolder = new SummaryViewHolder(mainGroup) {
             @Override
             public String toString() {
