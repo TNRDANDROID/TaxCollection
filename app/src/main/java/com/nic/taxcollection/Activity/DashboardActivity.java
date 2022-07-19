@@ -12,7 +12,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.android.volley.VolleyError;
 import com.nic.taxcollection.Adapter.TaxCollectionAdapter;
@@ -47,6 +49,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     ArrayList<Tax> taxList;
     TaxCollectionAdapter taxCollectionAdapter;
     RecyclerView recyclerView;
+    SnapHelper snapHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,11 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
         }
 
         recyclerView=findViewById(R.id.recycler);
-//        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),1);
-//        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        //snapHelper = new PagerSnapHelper();
+        //snapHelper.attachToRecyclerView(recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -74,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
 //        getTaxCollection();
 
         JSONObject jsonObject = new JSONObject();
-        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"Property tax\"},{\"id\":2,\"tax\":\"Water tax\"},{\"id\":3,\"tax\":\"Sales tax\"},{\"id\":4,\"tax\":\"Income tax\"},{\"id\":5,\"tax\":\"non tax\"}]}";
+        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"Property tax\"},{\"id\":2,\"tax\":\"Water Charges\"},{\"id\":3,\"tax\":\"Professional Tax\"},{\"id\":4,\"tax\":\"Non Tax\"},{\"id\":5,\"tax\":\"Trade License \"}]}";
         try {  jsonObject = new JSONObject(json); } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
 
@@ -183,8 +188,14 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
             dbData.open();
             taxList.addAll(dbData.get_tax_type());
             Log.d("Size",""+taxList.size());
+            ArrayList<Integer> taxImageList = new ArrayList<>();
+            taxImageList.add(R.drawable.property_tax);
+            taxImageList.add(R.drawable.water_tax);
+            taxImageList.add(R.drawable.professional_tax);
+            taxImageList.add(R.drawable.non_tax);
+            taxImageList.add(R.drawable.trade_licence_tax);
 
-            taxCollectionAdapter = new TaxCollectionAdapter(DashboardActivity.this,taxList);
+            taxCollectionAdapter = new TaxCollectionAdapter(DashboardActivity.this,taxList,taxImageList);
             recyclerView.setAdapter(taxCollectionAdapter);
         }
     }

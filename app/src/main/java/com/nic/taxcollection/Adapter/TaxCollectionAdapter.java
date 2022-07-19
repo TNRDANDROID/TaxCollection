@@ -2,9 +2,11 @@ package com.nic.taxcollection.Adapter;
 
 
 import android.app.Activity;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +19,14 @@ import java.util.ArrayList;
 public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdapter.SummaryViewHolder>{
     private Activity activity;
     private ArrayList<Tax> taxArrayList;
+    private ArrayList<Integer> taxImageList;
     LayoutInflater mInflater;
 
 
-    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList) {
+    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList,ArrayList<Integer> taxImageList) {
         this.activity=activity;
         this.taxArrayList=taxArrayList;
+        this.taxImageList=taxImageList;
         mInflater = LayoutInflater.from(activity);
     }
     @Override
@@ -30,7 +34,7 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
         LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
 
         ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
-                R.layout.tax_item_view, viewGroup, false);
+                R.layout.new_tax_item_view, viewGroup, false);
         SummaryViewHolder mainHolder = new SummaryViewHolder(mainGroup) {
             @Override
             public String toString() {
@@ -43,13 +47,15 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-            if(position%2==0){
+           /* if(position%2==0){
                 holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundpurple));
-            }else  {
+            }
+            else  {
                 holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundyello));
 
-            }
+            }*/
             holder.name.setText(taxArrayList.get(position).getTaxName());
+            holder.tax_img.setImageResource(taxImageList.get(position));
 
 
         } catch (Exception exp){
@@ -65,11 +71,13 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+        ImageView tax_img;
         RelativeLayout tax_layout;
 
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.taxName);
+            tax_img=(ImageView)view.findViewById(R.id.tax_img);
             tax_layout=(RelativeLayout)view.findViewById(R.id.tax_layout);
 
         }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/activity_main"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/dash_board_bg"
         >
 
-        <RelativeLayout
+      <!--  <RelativeLayout
             android:background="@android:color/transparent"
             android:id="@+id/img_rll"
             android:layout_width="match_parent"
@@ -152,8 +154,107 @@
 
 
             </RelativeLayout>
-        </LinearLayout>
+        </LinearLayout>-->
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:id="@+id/toll_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/menu_icon"
+                android:src="@drawable/ic_menu_icon"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginLeft="@dimen/_20sdp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_icon"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_logout"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/text_layout"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toll_bar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:text="@string/dashboard"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:id="@+id/designation"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tax_types_layout"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_below="@+id/text_layout"
+            android:elevation="@dimen/_5sdp"
+            android:background="@drawable/top_curved_dashboard_backgrond_bg"
+            tools:ignore="UnusedAttribute">
+
+            //Recyler_view
+            <RelativeLayout
+                android:id="@+id/recy_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:scrollbarSize="1dp"
+                    android:scrollbars="vertical"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:visibility="gone"
+                    android:text="@string/no_data_found"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/no_data_found"/>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+        
+    </RelativeLayout>
 
     </RelativeLayout>
 
