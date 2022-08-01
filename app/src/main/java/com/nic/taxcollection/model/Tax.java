@@ -14,6 +14,46 @@ public class Tax {
     private String taxId;
     private String taxName;
 
+    private String id;
+    private String fin;
+    private String name;
+    private String amount;
+
+    public String getId() {
+        return id;
+    }
+
+    public Tax setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getFin() {
+        return fin;
+    }
+
+    public Tax setFin(String fin) {
+        this.fin = fin;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Tax setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public Tax setAmount(String amount) {
+        this.amount = amount;
+        return this;
+    }
 
     public String getDistictCode() {
         return distictCode;

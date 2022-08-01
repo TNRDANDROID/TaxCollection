@@ -3,33 +3,30 @@ package com.nic.taxcollection.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nic.taxcollection.Activity.AssesmentSearch;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
+
 import java.util.ArrayList;
 
 
-public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdapter.SummaryViewHolder>{
+public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollectionListAdapter.SummaryViewHolder>{
     private Activity activity;
     private ArrayList<Tax> taxArrayList;
-    private ArrayList<Integer> taxImageList;
     LayoutInflater mInflater;
     private Context context;
 
-    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList,ArrayList<Integer> taxImageList,Context context) {
+    public TaxCollectionListAdapter(Activity activity, ArrayList<Tax> taxArrayList, Context context) {
         this.activity=activity;
         this.taxArrayList=taxArrayList;
-        this.taxImageList=taxImageList;
         this.context=context;
         mInflater = LayoutInflater.from(activity);
     }
@@ -38,7 +35,7 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
         LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
 
         ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
-                R.layout.tax_item_view_2, viewGroup, false);
+                R.layout.tax_collection_item_view, viewGroup, false);
         SummaryViewHolder mainHolder = new SummaryViewHolder(mainGroup) {
             @Override
             public String toString() {
@@ -58,16 +55,17 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
                 holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundyello));
 
             }*/
-            holder.name.setText(taxArrayList.get(position).getTaxName());
-            holder.tax_img.setImageResource(taxImageList.get(position));
+            holder.name.setText(taxArrayList.get(position).getName());
+            holder.fin.setText(taxArrayList.get(position).getFin());
+            holder.amount.setText(taxArrayList.get(position).getAmount());
+            if(position==0){
+                holder.layout_h.setVisibility(View.VISIBLE);
+            }else {holder.layout_h.setVisibility(View.GONE);}
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent gotoAssessmentSearch = new Intent(context, AssesmentSearch.class);
-                    gotoAssessmentSearch.putExtra("tax_type_id",taxArrayList.get(position).getTaxId());
-                    gotoAssessmentSearch.putExtra("tax_type_name",taxArrayList.get(position).getTaxName());
-                    context.startActivity(gotoAssessmentSearch);
+                   holder.check.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_accept));
                 }
             });
 
@@ -84,14 +82,18 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
         return taxArrayList.size();
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
-        ImageView tax_img;
+        TextView fin,name,amount;
+        ImageView check;
+        LinearLayout layout_h;
         //RelativeLayout tax_layout;
 
         SummaryViewHolder(View view) {
             super(view);
-            name=(TextView)view.findViewById(R.id.taxName);
-            tax_img=(ImageView)view.findViewById(R.id.tax_img);
+            fin=(TextView)view.findViewById(R.id.fin);
+            name=(TextView)view.findViewById(R.id.name);
+            amount=(TextView)view.findViewById(R.id.amount);
+            check=(ImageView)view.findViewById(R.id.check);
+            layout_h=(LinearLayout)view.findViewById(R.id.layout_h);
             //tax_layout=(RelativeLayout)view.findViewById(R.id.tax_layout);
 
         }

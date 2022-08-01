@@ -1,5 +1,11 @@
 package com.nic.taxcollection.Activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -9,14 +15,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
 import com.android.volley.VolleyError;
-import com.nic.taxcollection.Adapter.TaxListAdapter;
+import com.nic.taxcollection.Adapter.TaxCollectionListAdapter;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.api.Api;
 import com.nic.taxcollection.api.ApiService;
@@ -24,7 +24,6 @@ import com.nic.taxcollection.api.ServerResponse;
 import com.nic.taxcollection.constant.AppConstant;
 import com.nic.taxcollection.dataBase.DBHelper;
 import com.nic.taxcollection.dataBase.dbData;
-
 import com.nic.taxcollection.model.Tax;
 import com.nic.taxcollection.session.PrefManager;
 import com.nic.taxcollection.utils.UrlGenerator;
@@ -36,7 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity implements Api.ServerResponseListener{
+public class TaxCollectionListActivity extends AppCompatActivity implements Api.ServerResponseListener{
 
 
     Context context;
@@ -46,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     public static SQLiteDatabase db;
     public com.nic.taxcollection.dataBase.dbData dbData = new dbData(this);
     ArrayList<Tax> taxList;
-    TaxListAdapter taxListAdapter;
+    TaxCollectionListAdapter taxListAdapter;
     RecyclerView recyclerView;
     TextView no_data_found;
     SnapHelper snapHelper;
@@ -55,7 +54,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.tax_collection_activity);
         context=this;
         prefManager = new PrefManager(this);
         try {
@@ -80,14 +79,36 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
 //        getTaxCollection();
 
         JSONObject jsonObject = new JSONObject();
-        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"Property tax\"},{\"id\":2,\"tax\":\"Water Charges\"},{\"id\":3,\"tax\":\"Professional Tax\"},{\"id\":4,\"tax\":\"Non Tax\"},{\"id\":5,\"tax\":\"Trade License \"}]}";
+        taxList = new ArrayList<>();
+        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"fin\":\"2014-2015\",\"name\":\"first\",\"amount\":\"1000\"},{\"id\":2,\"fin\":\"2015-2016\",\"name\":\"sec\",\"amount\":\"3000\"},{\"id\":3,\"fin\":\"2016-2017\",\"name\":\"third\",\"amount\":\"6000\"},{\"id\":4,\"fin\":\"2017-2018\",\"name\":\"fourth\",\"amount\":\"8000\"}]}";
         try {  jsonObject = new JSONObject(json); } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
 
 
         try {
             if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                new Insert_TaxCollection().execute(jsonObject);
+                JSONArray jsonArray = new JSONArray();
+                jsonArray=jsonObject.getJSONArray("JSON_DATA");
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    try {
+                        Tax tax = new Tax();
+                        tax.setId(jsonArray.getJSONObject(i).getString("id"));
+                        tax.setFin(jsonArray.getJSONObject(i).getString("fin"));
+                        tax.setName(jsonArray.getJSONObject(i).getString("name"));
+                        tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
+
+                        taxList.add(tax);
+                        Log.d("Size",""+taxList.size());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,taxList,TaxCollectionListActivity.this);
+                recyclerView.setAdapter(taxListAdapter);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -164,8 +185,10 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
 
                     try {
                         Tax tax = new Tax();
-                        tax.setTaxId(jsonArray.getJSONObject(i).getString("id"));
-                        tax.setTaxName(jsonArray.getJSONObject(i).getString("tax"));
+                        tax.setId(jsonArray.getJSONObject(i).getString("id"));
+                        tax.setFin(jsonArray.getJSONObject(i).getString("fin"));
+                        tax.setName(jsonArray.getJSONObject(i).getString("name"));
+                        tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
                         taxList.add(tax);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -186,24 +209,15 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
         @Override
         protected void onPostExecute(ArrayList<Tax> list) {
             super.onPostExecute(list);
-
-            ArrayList<Integer> taxImageList = new ArrayList<>();
-            taxImageList.add(R.drawable.property_tax);
-            taxImageList.add(R.drawable.water_tax);
-            taxImageList.add(R.drawable.professional_tax);
-            taxImageList.add(R.drawable.non_tax);
-            taxImageList.add(R.drawable.trade_licence_tax);
             if(list.size()>0){
                 no_data_found.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                taxListAdapter = new TaxListAdapter(DashboardActivity.this,list,taxImageList,DashboardActivity.this);
-                recyclerView.setAdapter(taxListAdapter);
-            }else {
+            taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,list,TaxCollectionListActivity.this);
+            recyclerView.setAdapter(taxListAdapter);
+        }else {
                 no_data_found.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
-
-
         }
     }
 

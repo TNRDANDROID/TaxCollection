@@ -15,6 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String MASTER_FIN_YEAR_TABLE = "fin_year";
     public static final String TAX_TABLE = "tax";
+    public static final String TAX_COLLECTION_LIST_TABLE = "tax_collection_list";
 
 
     private Context context;
@@ -50,6 +51,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TAX_TABLE + " ("
                 +"tax_id TEXT,"+
                 "tax_name TEXT)");
+        db.execSQL("CREATE TABLE " + TAX_COLLECTION_LIST_TABLE + " ("
+                +"id TEXT,"+
+                 "fin TEXT,"+
+                 "amount TEXT,"+
+                "name TEXT)");
 
 
     }
@@ -64,6 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
             //New Tables
             db.execSQL("DROP TABLE IF EXISTS " + MASTER_FIN_YEAR_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + TAX_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + TAX_COLLECTION_LIST_TABLE);
 
             onCreate(db);
         }

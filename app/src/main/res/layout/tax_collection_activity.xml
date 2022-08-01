@@ -2,11 +2,10 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    android:background="@color/bg"
+        android:background="@color/bg"
         >
 
         <RelativeLayout
@@ -55,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="@string/tax_Collection"
+                        android:text="@string/tax_details"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_15sdp"
@@ -65,6 +64,7 @@
                     <ImageView
                         android:layout_centerVertical="true"
                         android:id="@+id/log_out"
+                        android:visibility="gone"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_alignParentRight="true"
@@ -82,8 +82,6 @@
             </androidx.appcompat.widget.Toolbar>
 
         </RelativeLayout>
-
-
 
 
       <!--  ///back ground drawable
@@ -121,8 +119,8 @@
             android:layout_below="@+id/img_rll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
             android:orientation="vertical">
-
 
             //Recyler_view
             <RelativeLayout
@@ -130,8 +128,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
                 android:gravity="center">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
@@ -155,7 +151,47 @@
                     android:id="@+id/no_data_found"></TextView>
 
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cash_pay"
+                        android:id="@+id/cash_pay"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentLeft="true"
+                        android:background="@drawable/corner_strong_rect_bg_all"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/online_pay"
+                        android:id="@+id/online_pay"
+                        android:layout_toRightOf="@+id/cash_pay"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_20sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/corner_strong_rect_bg_all"/>
+
+                </RelativeLayout>
+
             </RelativeLayout>
+
+
         </LinearLayout>
 
 

@@ -17,4 +17,11 @@
     <string name="save">Save</string>
     <string name="submit">Submit</string>
     <string name="details">Tax Details</string>
+    <string name="cash_pay">Cash Pay</string>
+    <string name="online_pay">Online Pay</string>
+    <string name="view_details">View Details</string>
+    <string name="tax_details">Tax Details</string>
+    <string name="fin">FinYear</string>
+    <string name="name">Name</string>
+    <string name="amount">Amount</string>
 </resources>
