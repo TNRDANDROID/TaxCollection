@@ -3,6 +3,11 @@
     package="com.nic.taxcollection">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
@@ -10,6 +15,9 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activity.ReceiptLayout"></activity>
+        <activity android:name=".Activity.PaymentActivity" />
+        <activity android:name=".Activity.AssesmentSearch" />
         <activity android:name=".Activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,10 +26,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.LoginScreen" />
-        <activity android:name=".Activity.MainActivity">
-
-        </activity>
+        <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.DashboardActivity" />
+
+        <provider
+            android:name=".Provider.MyProvider"
+            android:authorities="com.nic.taxcollection.Provider.MyProvider"
+            android:exported="true"
+            android:multiprocess="true" />
+
+        <uses-library
+            android:name="com.pos.device"
+            android:required="true" />
     </application>
 
 </manifest>

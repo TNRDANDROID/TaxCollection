@@ -97,4 +97,6 @@ dependencies {
 
     //size
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    compileOnly files('libs/new9220.jar')
 }

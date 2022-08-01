@@ -2,6 +2,8 @@ package com.nic.taxcollection.Adapter;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nic.taxcollection.Activity.AssesmentSearch;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
 import java.util.ArrayList;
@@ -21,12 +24,13 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
     private ArrayList<Tax> taxArrayList;
     private ArrayList<Integer> taxImageList;
     LayoutInflater mInflater;
+    private Context context;
 
-
-    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList,ArrayList<Integer> taxImageList) {
+    public TaxCollectionAdapter( Activity activity, ArrayList<Tax> taxArrayList,ArrayList<Integer> taxImageList,Context context) {
         this.activity=activity;
         this.taxArrayList=taxArrayList;
         this.taxImageList=taxImageList;
+        this.context=context;
         mInflater = LayoutInflater.from(activity);
     }
     @Override
@@ -56,6 +60,16 @@ public class TaxCollectionAdapter extends RecyclerView.Adapter<TaxCollectionAdap
             }*/
             holder.name.setText(taxArrayList.get(position).getTaxName());
             holder.tax_img.setImageResource(taxImageList.get(position));
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent gotoAssessmentSearch = new Intent(context, AssesmentSearch.class);
+                    gotoAssessmentSearch.putExtra("tax_type_id",taxArrayList.get(position).getTaxId());
+                    gotoAssessmentSearch.putExtra("tax_type_name",taxArrayList.get(position).getTaxName());
+                    context.startActivity(gotoAssessmentSearch);
+                }
+            });
 
 
         } catch (Exception exp){

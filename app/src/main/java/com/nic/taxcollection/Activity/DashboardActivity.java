@@ -195,7 +195,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
             taxImageList.add(R.drawable.non_tax);
             taxImageList.add(R.drawable.trade_licence_tax);
 
-            taxCollectionAdapter = new TaxCollectionAdapter(DashboardActivity.this,taxList,taxImageList);
+            taxCollectionAdapter = new TaxCollectionAdapter(DashboardActivity.this,taxList,taxImageList,DashboardActivity.this);
             recyclerView.setAdapter(taxCollectionAdapter);
         }
     }
