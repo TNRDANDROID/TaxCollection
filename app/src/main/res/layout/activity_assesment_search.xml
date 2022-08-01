@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="@dimen/_12sdp"
-                        android:text="@string/enter_assessment_number"
+                        android:text="@string/enter_assesment_numbert"
                         android:padding="@dimen/_5sdp"/>
 
                     <RelativeLayout
@@ -79,7 +79,7 @@
                             android:layout_height="match_parent"
                             android:inputType="number"
                             android:background="@android:color/transparent"
-                            android:hint="@string/assessment_number"
+                            android:hint="@string/assesment_number"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingStart="@dimen/_10sdp"
                             tools:ignore="RtlSymmetry" />
