@@ -104,7 +104,7 @@
                                     android:singleLine="true"
                                     android:textSize="@dimen/_11sdp"
                                     android:layout_centerVertical="true"
-                                    android:inputType="text"
+                                    android:inputType="textPersonName"
                                     android:hint="@string/user_name"
                                     android:background="@android:color/transparent"
                                     android:layout_toEndOf="@+id/user_icon"
@@ -128,6 +128,7 @@
                                 <EditText
                                     android:layout_marginLeft="@dimen/_10sdp"
                                     android:layout_toRightOf="@+id/password_icon"
+                                    android:layout_toLeftOf="@+id/visible_icon"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:id="@+id/user_password"
@@ -138,7 +139,19 @@
                                     android:hint="@string/password"
                                     android:background="@android:color/transparent"
                                     android:layout_toEndOf="@+id/password_icon"
-                                    android:layout_marginStart="@dimen/_10sdp" />
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_toStartOf="@+id/visible_icon" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/visible_icon"
+                                    android:onClick="showPassword"
+                                    android:layout_alignParentEnd="true"
+                                    android:src="@drawable/ic_baseline_visibility_24px"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:layout_alignParentRight="true" />
 
                             </RelativeLayout>
                             <Button

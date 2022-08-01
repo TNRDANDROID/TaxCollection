@@ -12,7 +12,6 @@ import org.json.JSONArray;
  * Created by Dileep on 2022.
  */
 public class PrefManager {
-
     // Shared Preferences
     SharedPreferences pref;
     // Editor for Shared preferences
@@ -33,32 +32,54 @@ public class PrefManager {
     private static final String KEY_USER_NAME = "UserName";
     private static final String KEY_USER_PASSWORD = "UserPassword";
     private static final String KEY_DISTRICT_CODE = "District_Code";
-    private static final String KEY_PARTICULAR_DISTRICT_CODE = "Particular_District_Code";
     private static final String KEY_BLOCK_CODE = "Block_Code";
     private static final String KEY_PV_CODE = "Pv_Code";
+    private static final String KEY_HAB_CODE = "Hab_Code";
     private static final String KEY_DISTRICT_NAME = "District_Name";
     private static final String KEY_DESIGNATION = "Designation";
     private static final String KEY_NAME = "Name";
     private static final String KEY_BLOCK_NAME = "Block_Name";
     private static final String KEY_SPINNER_SELECTED_PVCODE = "spinner_selected_pv_code";
-    private static final String KEY_AUTOCOMPLETE_SELECTED_BANK_NAME = "autocomplete_selected_bank_name";
-    private static final String KEY_AUTOCOMPLETE_SELECTED_BANK_ID = "autocomplete_selected_bank_id";
-    private static final String KEY_SPINNER_SELECTED_CATEGORY_ID= "spinner_selected_category_id";
-    private static final String KEY_DISTRICT_CODE_JSON = "district_code_json";
+    private static final String KEY_SPINNER_SELECTED_BLOCKCODE = "spinner_selected_block_code";
+
+    private static final String KEY_BLOCK_CODE_JSON = "block_code_json";
     private static final String KEY_VILLAGE_CODE_JSON = "village_code_json";
     private static final String KEY_SCHEME_NAME = "Scheme_Name";
-    private static final String KEY_SCHEME_SEQUENTIAL_ID = "SCHEME_SEQUENTIAL_ID";
     private static final String KEY_FINANCIALYEAR_NAME = "FinancialYear_Name";
+    private static final String KEY_VILLAGE_LIST_PV_NAME = "Village_List_Pv_Name";
+
 
 
     private static final String IMEI = "imei";
     private static final String MOTIVATOR_ID = "motivator_id";
     private static final String SCHEDULE_MASTER_ID = "schedule_master_id";
-    private static final String TYPE_OF_WORK = "type_of_work";
-    private static final String DELETE_WORK_ID = "delete_work_id";
-    private static final String DELETE_CD_WORK_NO = "delete_cd_work_no";
-    private static final String DELETE_CD_WORK_TYPE_FLAG = "delete_cd_work_type_flag";
-    private static final String DELETE_ADAPTER_POSITION = "delete_adapter_position";
+    private static final String KEY_DELETE_ID = "deleteId";
+    private static final String KEY_DELETE_POSITION = "deletePosition";
+    private static final String CHECK_BOX_CLICKED = "checkboxvalue";
+    private static final String MI_TANK_SURVEY_ID = "mi_tank_survey_id";
+
+
+    private static final String WARD_LIST = "WardList";
+    private static final String STREET_LIST = "StreetList";
+    private static final String TAX_TYPE_LIST = "TaxTypeList";
+    private static final String TRADER_LICENSE_TYPE_LIST = "TraderLicenseTypeList";
+    private static final String TRADERS_LIST = "TradersList";
+    private static final String DAILY_COLLECTION_LIST = "DailyCollectionList";
+    private static final String STATE_CODE = "StateCode";
+    private static final String LB_TYPE = "lbtype";
+    private static final String TP_CODE = "tpcode";
+    private static final String LBODY_NAME_EN = "lbody_name_en";
+    private static final String ROLE_CODE = "role_code";
+    private static final String ROLE_NAME = "role_name";
+    private static final String USER_FNAME = "user_first_name";
+    private static final String USER_LNAME = "user_last_name";
+    private static final String TRADER_IMAGE_LIST = "trader_image_list";
+    private static final String FIELD_VISIT_HISTORY_LIST = "FieldVisitHistory_list";
+    private static final String PROPERTY_IMAGE = "PROPERTY_IMAGE";
+    private static final String PROPERTY_IMAGE_LAT = "PROPERTY_IMAGE_LAT";
+    private static final String PROPERTY_IMAGE_LONG = "PROPERTY_IMAGE_LONG";
+
+
 
 
     public PrefManager(Context context) {
@@ -84,6 +105,14 @@ public class PrefManager {
         editor.putString(IMEI,imei);
         editor.commit();
     }
+    public String getTraderImageList() {
+        return pref.getString(TRADER_IMAGE_LIST,null);
+    }
+
+    public void setTraderImageList(String traderImageList) {
+        editor.putString(TRADER_IMAGE_LIST,traderImageList);
+        editor.commit();
+    }
 
     public void setAppKey(String appKey) {
         editor.putString(APP_KEY, appKey);
@@ -92,6 +121,155 @@ public class PrefManager {
 
     public String getAppKey() {
         return pref.getString(APP_KEY, null);
+    }
+
+    public void setWardList(String ward) {
+        editor.putString(WARD_LIST, ward);
+        editor.commit();
+    }
+
+    public String getWardList() {
+        return pref.getString(WARD_LIST, null);
+    }
+
+    public void setPropertyImage(String propertyImage) {
+        editor.putString(PROPERTY_IMAGE, propertyImage);
+        editor.commit();
+    }
+
+    public String getPropertyImage() {
+        return pref.getString(PROPERTY_IMAGE, null);
+    }
+    public void setPropertyImageLong(String propertyImageLong) {
+        editor.putString(PROPERTY_IMAGE_LONG, propertyImageLong);
+        editor.commit();
+    }
+
+    public String getPropertyImageLong() {
+        return pref.getString(PROPERTY_IMAGE_LONG, null);
+    }
+    public void setPropertyImageLat(String propertyImageLat) {
+        editor.putString(PROPERTY_IMAGE_LAT, propertyImageLat);
+        editor.commit();
+    }
+
+    public String getPropertyImageLat() {
+        return pref.getString(PROPERTY_IMAGE_LAT, null);
+    }
+    public void setUserFname(String userFname) {
+        editor.putString(USER_FNAME, userFname);
+        editor.commit();
+    }
+
+    public String getUserFname() {
+        return pref.getString(USER_FNAME, null);
+    }
+    public void setUserLname(String userLname) {
+        editor.putString(USER_LNAME, userLname);
+        editor.commit();
+    }
+
+    public String getUserLname() {
+        return pref.getString(USER_LNAME, null);
+    }
+    public void setRoleName(String roleName) {
+        editor.putString(ROLE_NAME, roleName);
+        editor.commit();
+    }
+
+    public String getRoleName() {
+        return pref.getString(ROLE_NAME, null);
+    }
+    public void setRoleCode(String roleCode) {
+        editor.putString(ROLE_CODE, roleCode);
+        editor.commit();
+    }
+
+    public String getRoleCode() {
+        return pref.getString(ROLE_CODE, null);
+    }
+    public void setLbodyNameEn(String lbodyNameEn) {
+        editor.putString(LBODY_NAME_EN, lbodyNameEn);
+        editor.commit();
+    }
+
+    public String getLbodyNameEn() {
+        return pref.getString(LBODY_NAME_EN, null);
+    }
+    public void setLbType(String lbType) {
+        editor.putString(LB_TYPE, lbType);
+        editor.commit();
+    }
+
+    public String getLbType() {
+        return pref.getString(LB_TYPE, null);
+    }
+    public void setStateCode(String stateCode) {
+        editor.putString(STATE_CODE, stateCode);
+        editor.commit();
+    }
+
+    public String getStateCode() {
+        return pref.getString(STATE_CODE, null);
+    }
+
+    public void setStreetList(String street) {
+        editor.putString(STREET_LIST, street);
+        editor.commit();
+    }
+
+    public String getStreetList() {
+        return pref.getString(STREET_LIST, null);
+    }
+    public void setTpCode(String tpCode) {
+        editor.putString(TP_CODE, tpCode);
+        editor.commit();
+    }
+
+    public String getTpCode() {
+        return pref.getString(TP_CODE, null);
+    }
+
+    public void setDailyCollectionList(String dailyCollectionList) {
+        editor.putString(DAILY_COLLECTION_LIST, dailyCollectionList);
+        editor.commit();
+    }
+
+    public String getDailyCollectionList() {
+        return pref.getString(DAILY_COLLECTION_LIST, null);
+    }
+
+    public void setTaxTypeList(String taxTypeList) {
+        editor.putString(TAX_TYPE_LIST, taxTypeList);
+        editor.commit();
+    }
+
+    public String getTaxTypeList() {
+        return pref.getString(TAX_TYPE_LIST, null);
+    }
+    public void setTraderLicenseTypeList(String TraderLicenseTypeList) {
+        editor.putString(TRADER_LICENSE_TYPE_LIST, TraderLicenseTypeList);
+        editor.commit();
+    }
+
+    public String getTraderLicenseTypeList() {
+        return pref.getString(TRADER_LICENSE_TYPE_LIST, null);
+    }
+    public void setTradersList(String TradersList) {
+        editor.putString(TRADERS_LIST, TradersList);
+        editor.commit();
+    }
+
+    public String getTradersList() {
+        return pref.getString(TRADERS_LIST, null);
+    }
+    public void setFieldVisitHistoryList(String fieldVisitHistoryList) {
+        editor.putString(FIELD_VISIT_HISTORY_LIST, fieldVisitHistoryList);
+        editor.commit();
+    }
+
+    public String getFieldVisitHistoryList() {
+        return pref.getString(FIELD_VISIT_HISTORY_LIST, null);
     }
 
 
@@ -103,6 +281,24 @@ public class PrefManager {
 
     public void setUserAuthKey(String userAuthKey) {
         editor.putString(KEY_USER_AUTH_KEY, userAuthKey);
+        editor.commit();
+    }
+
+    public String getKeyDeleteId() {
+        return pref.getString(KEY_DELETE_ID,null);
+    }
+
+    public void setKeyDeleteId(String deleteId) {
+        editor.putString(KEY_DELETE_ID,deleteId);
+        editor.commit();
+    }
+
+    public Integer getKeyDeletePosition() {
+        return pref.getInt(KEY_DELETE_POSITION,0);
+    }
+
+    public void setKeyDeletePosition(Integer deletePos) {
+        editor.putInt(KEY_DELETE_POSITION,deletePos);
         editor.commit();
     }
 
@@ -163,16 +359,6 @@ public class PrefManager {
         return pref.getString(KEY_DISTRICT_CODE, null);
     }
 
-    public Object setParicularDCode(Object key) {
-        editor.putString(KEY_PARTICULAR_DISTRICT_CODE, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public String getParticularDCode() {
-        return pref.getString(KEY_PARTICULAR_DISTRICT_CODE, null);
-    }
-
 
     public Object setBlockCode(Object key) {
         editor.putString(KEY_BLOCK_CODE, String.valueOf(key));
@@ -196,6 +382,15 @@ public class PrefManager {
         return pref.getString(KEY_PV_CODE, null);
     }
 
+    public Object setHabCode(Object key) {
+        editor.putString(KEY_HAB_CODE, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public String getHabCode() {
+        return pref.getString(KEY_HAB_CODE, null);
+    }
 
 
 
@@ -218,55 +413,6 @@ public class PrefManager {
     public String getBlockName() {
         return pref.getString(KEY_BLOCK_NAME, null);
     }
-
-    public Object setTypeOfWork(Object key) {
-        editor.putString(TYPE_OF_WORK, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public String getTypeOfWork() {
-        return pref.getString(TYPE_OF_WORK, null);
-    }
-
-
-    public String getDeleteWorkId() {
-        return pref.getString(DELETE_WORK_ID,null);
-    }
-
-    public void setDeleteWorkId(String LocationId) {
-        editor.putString(DELETE_WORK_ID,LocationId);
-        editor.commit();
-    }
-
-    public String getDeleteCdWorkNo() {
-        return pref.getString(DELETE_CD_WORK_NO,null);
-    }
-
-    public void setDeleteCdWorkNo(String LocationId) {
-        editor.putString(DELETE_CD_WORK_NO,LocationId);
-        editor.commit();
-    }
-
-    public void setDeleteCdWorkTypeFlag(String LocationId) {
-        editor.putString(DELETE_CD_WORK_TYPE_FLAG,LocationId);
-        editor.commit();
-    }
-
-    public String getDeleteCdWorkTypeFlag() {
-        return pref.getString(DELETE_CD_WORK_TYPE_FLAG,null);
-    }
-
-    public void setDeleteAdapterPosition(Integer LocationId) {
-        editor.putInt(DELETE_ADAPTER_POSITION,LocationId);
-        editor.commit();
-    }
-
-    public Integer getDeleteAdapterPosition() {
-        return pref.getInt(DELETE_ADAPTER_POSITION,0);
-    }
-
-
 
 
     public Object setDesignation(Object key) {
@@ -297,14 +443,6 @@ public class PrefManager {
 
     public String getSchemeName() {return pref.getString(KEY_SCHEME_NAME,null);}
 
-    public  void setKeySpinnerSelectedSchemeSeqId(Integer key) {
-        editor.putInt(KEY_SCHEME_SEQUENTIAL_ID,key);
-        editor.commit();
-    }
-
-    public Integer getKeySpinnerSelectedSchemeSeqId() {return pref.getInt(KEY_SCHEME_SEQUENTIAL_ID,0);}
-
-
     public void setFinancialyearName(String key) {
         editor.putString(KEY_FINANCIALYEAR_NAME,key);
         editor.commit();
@@ -330,18 +468,18 @@ public class PrefManager {
     }
 
 
-    public void setDistrictCodeJson(JSONArray jsonarray) {
-        editor.putString(KEY_DISTRICT_CODE_JSON, jsonarray.toString());
+    public void setBlockCodeJson(JSONArray jsonarray) {
+        editor.putString(KEY_BLOCK_CODE_JSON, jsonarray.toString());
         editor.commit();
     }
 
-    private String getDistrictCodeJsonList() {
-        return pref.getString(KEY_DISTRICT_CODE_JSON, null);
+    private String getBlockCodeJsonList() {
+        return pref.getString(KEY_BLOCK_CODE_JSON, null);
     }
 
-    public JSONArray getDistrictCodeJson() {
+    public JSONArray getBlockCodeJson() {
         JSONArray jsonData = null;
-        String strJson = getDistrictCodeJsonList();//second parameter is necessary ie.,Value to return if this preference does not exist.
+        String strJson = getBlockCodeJsonList();//second parameter is necessary ie.,Value to return if this preference does not exist.
         try {
             if (strJson != null) {
                 jsonData = new JSONArray(strJson);
@@ -376,5 +514,41 @@ public class PrefManager {
         return jsonData;
     }
 
+    public void setKeySpinnerSelectedBlockcode(String userName) {
+        editor.putString(KEY_SPINNER_SELECTED_BLOCKCODE, userName);
+        editor.commit();
+    }
+
+    public String getKeySpinnerSelectedBlockcode() {
+        return pref.getString(KEY_SPINNER_SELECTED_BLOCKCODE, null);
+    }
+
+    public void setVillageListPvName(String key) {
+        editor.putString(KEY_VILLAGE_LIST_PV_NAME,  key);
+        editor.commit();
+    }
+
+    public String getVillageListPvName() {
+        return pref.getString(KEY_VILLAGE_LIST_PV_NAME, null);
+    }
+
+    public void setCheckBoxClicked(String key) {
+        editor.putString(CHECK_BOX_CLICKED,  key);
+        editor.commit();
+    }
+
+    public String getCheckBoxClicked() {
+        return pref.getString(CHECK_BOX_CLICKED, null);
+    }
+
+    public void setMiTankSurveyId(String key) {
+        editor.putString(MI_TANK_SURVEY_ID,  key);
+        editor.commit();
+    }
+
+    public String getMiTankSurveyId() {
+        return pref.getString(MI_TANK_SURVEY_ID, null);
+    }
 
 }
+

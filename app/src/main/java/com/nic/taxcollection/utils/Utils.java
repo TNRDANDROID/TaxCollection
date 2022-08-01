@@ -73,7 +73,8 @@ public class Utils {
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
-    private static String CIPHER_NAME = "AES/CBC/PKCS5PADDING";
+    private static String CIPHER_NAME = "AES/CBC/NoPadding";
+    private static String CIPHER_NAME2 = "AES/CBC/PKCS5PADDING";
     private static int CIPHER_KEY_LEN = 16; //128 bits
     private static PrefManager prefManager;
 
@@ -1084,7 +1085,7 @@ public class Utils {
             // System.out.println(fixKey(iv));
             SecretKeySpec secretKey = new SecretKeySpec(fixKey(key).getBytes("UTF-8"), "AES");
 
-            Cipher cipher = Cipher.getInstance(CIPHER_NAME);
+            Cipher cipher = Cipher.getInstance(CIPHER_NAME2);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
 
             byte[] decodedEncryptedData = android.util.Base64.decode(parts[0], 1);
@@ -1148,101 +1149,8 @@ public class Utils {
         Date date = new Date();
         return formatter.format(date);
     }
-    public static JSONObject districtListJsonParams() throws JSONException {
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_DISTRICT_LIST_ALL);
-        Log.d("object", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject blockListDistrictWiseJsonParams(Activity activity) throws JSONException {
-        prefManager = new PrefManager(activity);
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_BLOCK_LIST_DISTRICT_WISE);
-        dataSet.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
-        Log.d("blockListDistrictWise", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject villageListDistrictBlockWiseJsonParams(Activity activity) throws JSONException {
-        prefManager = new PrefManager(activity);
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_VILLAGE_LIST_DISTRICT_BLOCK_WISE);
-        dataSet.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
-        dataSet.put(AppConstant.BLOCK_CODE, prefManager.getBlockCode());
-        Log.d("villageListDistBlock", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject schemeFinyearListJsonParams(Activity activity) throws JSONException {
-        prefManager = new PrefManager(activity);
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_SCHEME_FINYEAR_LIST_LAST_NYEARS);
-        dataSet.put(AppConstant.N_YEAR, 6);
-        Log.d("object", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject stageListJsonParams() throws JSONException {
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.STAGE_LIST);
-        Log.d("object", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject additionalstageListJsonParams() throws JSONException {
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.ADDITIONAL_STAGE_LIST);
-        Log.d("object", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject schemeListBlockWiseJsonParams(Activity activity) throws JSONException {
-        prefManager = new PrefManager(activity);
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_SCHEME_LIST_DISTRICT_FINYEAR_WISE);
-        dataSet.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCodeJson());
-        Log.d("objectschemeLis", "" + dataSet);
-        return dataSet;
-    }
-
-    public static JSONObject workListBlockWiseJsonParams(Activity activity) throws JSONException {
-        prefManager = new PrefManager(activity);
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.WORK_LIST_BASED_ON_FINYEAR_VILLAGE);
-        dataSet.put(AppConstant.FINANCIAL_YEAR, prefManager.getFinancialyearName());
-        dataSet.put(AppConstant.SCHEME_ID, prefManager.getKeySpinnerSelectedSchemeSeqId());
-        dataSet.put(AppConstant.PV_CODE, prefManager.getPvCode());
-        Log.d("objectworkLis", "" + dataSet);
-        return dataSet;
-    }
 
 
-//    public static void deleteCache(Context context) {
-//        try {
-//            File dir = context.getCacheDir();
-//            if (dir != null && dir.isDirectory()) {
-//                deleteDir(dir);
-//            }
-//        } catch (Exception e) { e.printStackTrace();}
-//    }
-//
-//    public static boolean deleteDir(File dir) {
-//        if (dir != null && dir.isDirectory()) {
-//            String[] children = dir.list();
-//            for (int i = 0; i < children.length; i++) {
-//                boolean success = deleteDir(new File(dir, children[i]));
-//                if (!success) {
-//                    return false;
-//                }
-//            }
-//            return dir.delete();
-//        } else if(dir!= null && dir.isFile()) {
-//            return dir.delete();
-//        } else {
-//            return false;
-//        }
-//    }
 
     public static void clearApplicationData(Context context) {
         File cache = context.getCacheDir();
@@ -1270,5 +1178,38 @@ public class Utils {
         }
 
         return dir.delete();
+    }
+
+
+    public static String getSHA512(String input){
+
+        String toReturn = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            digest.reset();
+            digest.update(input.getBytes("utf8"));
+            toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
+    }
+
+    public static String NotNullString(String text){
+        if(text.equals("")){
+            return "";
+        }
+        else if(text.equals("null")){
+            return "";
+
+        }
+        else if(text==null){
+            return "";
+
+        }
+        else {
+            return text;
+        }
     }
 }

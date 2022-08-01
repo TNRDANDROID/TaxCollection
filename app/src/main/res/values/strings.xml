@@ -24,4 +24,10 @@
     <string name="fin">FinYear</string>
     <string name="name">Name</string>
     <string name="amount">Amount</string>
+
+    <string name="please_enter_the_username">Please Enter The User Name</string>
+    <string name="please_enter_the_password">Please Enter the Password</string>
+    <string name="please_enter_your_username_and_password">Please Enter Your User Name and Password</string>
+    <string name="settings">Settings</string>
+    <string name="internet_connection_not_available">"Internet Connection is not available..Please Turn On Network Connection "</string>
 </resources>
