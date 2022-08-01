@@ -87,8 +87,10 @@ public class PaymentActivity extends AppCompatActivity implements LoaderManager.
             public void onClick(View view) {
                 if(!amount_et.getText().toString().equals("")){
 
-                    visibleGone();
-                    getBitmapFromView(activity_main);
+                    /*visibleGone();
+                    getBitmapFromView(activity_main);*/
+                    Intent intent = new Intent(PaymentActivity.this,ReceiptLayout.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(PaymentActivity.this,"Please Enter Amount",Toast.LENGTH_SHORT).show();
