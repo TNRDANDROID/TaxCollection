@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dash_board_bg"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:id="@+id/toll_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/back_icon"
+                android:src="@drawable/ic_back_left_icon"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp" />
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_icon"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_logout"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_alignParentRight="true" />
+            <RelativeLayout
+                android:id="@+id/text_layout"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="Payment Option"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tax_types_layout"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_below="@+id/toll_bar"
+            android:elevation="@dimen/_5sdp"
+            android:background="@drawable/top_curved_dashboard_backgrond_bg"
+            tools:ignore="UnusedAttribute">
+
+            //Recyler_view
+            <RelativeLayout
+                android:id="@+id/recy_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:scrollbarSize="1dp"
+                    android:scrollbars="vertical"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:visibility="gone"
+                    android:text="@string/no_data_found"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/no_data_found"/>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

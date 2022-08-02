@@ -16,7 +16,10 @@ import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
 import com.nic.taxcollection.utils.Utils;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollectionListAdapter.SummaryViewHolder>{
@@ -58,7 +61,7 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
             }*/
             holder.name.setText(taxArrayList.get(position).getName());
             holder.fin.setText(taxArrayList.get(position).getFin());
-            holder.amount.setText(taxArrayList.get(position).getAmount());
+            holder.amount.setText(indianMoney(taxArrayList.get(position).getAmount()));
             if(position==0){
                 holder.layout_h.setVisibility(View.VISIBLE);
             }else {holder.layout_h.setVisibility(View.GONE);}
@@ -83,7 +86,8 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                             }
 
                         }
-                    }else if(position > 0 && position != taxArrayList.size()-1){
+                    }
+                    else if(position > 0 && position != taxArrayList.size()-1){
                         if(taxArrayList.get(position).getPayStatus()== 0){
                             if(taxArrayList.get(position-1).getPayStatus()== 1){
                                 Tax tax = taxArrayList.get(position);
@@ -94,7 +98,8 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                                 Utils.showAlert(activity,"Please select previous year");
                             }
 
-                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                        }
+                        else if(taxArrayList.get(position).getPayStatus()== 1){
                             if(taxArrayList.get(position+1).getPayStatus()== 0){
                                 Tax tax = taxArrayList.get(position);
                                 tax.setPayStatus(0);
@@ -105,7 +110,8 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                             }
                         }
 
-                    }else if(position > 0 && position == taxArrayList.size()-1){
+                    }
+                    else if(position > 0 && position == taxArrayList.size()-1){
 
                         if(taxArrayList.get(position).getPayStatus()== 0){
                             if(taxArrayList.get(position-1).getPayStatus()== 1){
@@ -117,7 +123,8 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                                 Utils.showAlert(activity,"You can't able to pay with pending year");
                             }
 
-                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                        }
+                        else if(taxArrayList.get(position).getPayStatus()== 1){
                                 Tax tax = taxArrayList.get(position);
                                 tax.setPayStatus(0);
                                 taxArrayList.set(position,tax);
@@ -166,6 +173,22 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
         }
     }
 
+    public String indianMoney(String amount){
+        String amount_value="";
+        try{
+            Locale locale = new Locale("en","IN");
+            DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getCurrencyInstance(locale);
+            DecimalFormatSymbols dfs = DecimalFormatSymbols.getInstance(locale);
+            dfs.setCurrencySymbol("\u20B9");
+            decimalFormat.setDecimalFormatSymbols(dfs);
+            System.out.println(decimalFormat.format(Integer.parseInt(amount)));
+            amount_value = decimalFormat.format(Integer.parseInt(amount));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return amount_value;
+    }
 
 
 }

@@ -68,7 +68,7 @@ public class LoginScreen extends AppCompatActivity implements Api.ServerResponse
         visible_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showPassword(view);
             }
         });
 

@@ -18,6 +18,38 @@ public class Tax {
     private String fin;
     private String name;
     private String amount;
+    private int payStatus;
+
+
+    public int getPayStatus() {
+        return payStatus;
+    }
+
+    public Tax setPayStatus(int payStatus) {
+        this.payStatus = payStatus;
+        return this;
+    }
+
+    ////Payment Type List
+    private String paymenttypeid;
+    private String paymenttype;
+
+    public String getPaymenttypeid() {
+        return paymenttypeid;
+    }
+
+    public void setPaymenttypeid(String paymenttypeid) {
+        this.paymenttypeid = paymenttypeid;
+    }
+
+    public String getPaymenttype() {
+        return paymenttype;
+    }
+
+    public void setPaymenttype(String paymenttype) {
+        this.paymenttype = paymenttype;
+    }
+    ////////
 
     public String getId() {
         return id;

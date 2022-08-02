@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ReceiptLayout"></activity>
+        <activity android:name=".Activity.PaymentOption"></activity>
+        <activity android:name=".Activity.ReceiptLayout" />
         <activity android:name=".Activity.PaymentActivity" />
         <activity android:name=".Activity.AssesmentSearch" />
         <activity android:name=".Activity.SplashScreen">

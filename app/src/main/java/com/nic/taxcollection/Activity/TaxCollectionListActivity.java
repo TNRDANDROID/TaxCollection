@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
     ArrayList<Tax> taxList;
     TaxCollectionListAdapter taxListAdapter;
     RecyclerView recyclerView;
-    TextView no_data_found;
+    TextView no_data_found,payment,reset;
     SnapHelper snapHelper;
 
     @Override
@@ -68,6 +69,8 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
 
         recyclerView=findViewById(R.id.recycler);
         no_data_found=findViewById(R.id.no_data_found);
+        payment=findViewById(R.id.payment);
+        reset=findViewById(R.id.reset);
        /* RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(mLayoutManager);*/
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
@@ -84,6 +87,13 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
             }
         });
 
+        payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent payment_option = new Intent(TaxCollectionListActivity.this,PaymentOption.class);
+                startActivity(payment_option);
+            }
+        });
 //        getTaxCollection();
 
         JSONObject jsonObject = new JSONObject();

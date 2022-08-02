@@ -1030,7 +1030,7 @@ public class Utils {
             IvParameterSpec ivSpec = new IvParameterSpec(iv.getBytes("UTF-8"));
             SecretKeySpec secretKey = new SecretKeySpec(fixKey(key).getBytes("UTF-8"), "AES");
 
-            Cipher cipher = Cipher.getInstance(CIPHER_NAME);
+            Cipher cipher = Cipher.getInstance(CIPHER_NAME2);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
 
             byte[] encryptedData = cipher.doFinal((data.getBytes()));
@@ -1085,7 +1085,7 @@ public class Utils {
             // System.out.println(fixKey(iv));
             SecretKeySpec secretKey = new SecretKeySpec(fixKey(key).getBytes("UTF-8"), "AES");
 
-            Cipher cipher = Cipher.getInstance(CIPHER_NAME2);
+            Cipher cipher = Cipher.getInstance(CIPHER_NAME);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
 
             byte[] decodedEncryptedData = android.util.Base64.decode(parts[0], 1);

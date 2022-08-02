@@ -67,19 +67,16 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
 
         recyclerView=findViewById(R.id.recycler);
         no_data_found=findViewById(R.id.no_data_found);
-       /* RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(mLayoutManager);*/
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-        //snapHelper = new PagerSnapHelper();
-        //snapHelper.attachToRecyclerView(recyclerView);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setFocusable(false);
 
-//        getTaxCollection();
+        getTaxCollection();
 
-        JSONObject jsonObject = new JSONObject();
+        /*JSONObject jsonObject = new JSONObject();
         String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"tax\":\"Property tax\"},{\"id\":2,\"tax\":\"Water Charges\"},{\"id\":3,\"tax\":\"Professional Tax\"},{\"id\":4,\"tax\":\"Non Tax\"},{\"id\":5,\"tax\":\"Trade License \"}]}";
         try {  jsonObject = new JSONObject(json); } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
@@ -92,12 +89,12 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+*/
     }
 
     public  void getTaxCollection() {
         try {
-            new ApiService(this).makeJSONObjectRequest("TaxCollection", Api.Method.POST, UrlGenerator.getLoginUrl(), taxCollectionJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("TaxCollection", Api.Method.POST, UrlGenerator.getAppMainServiceUrl(), taxCollectionJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,7 +109,8 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
     }
     public JSONObject taxCollectionParams() throws JSONException {
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TaxCollection");
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TaxTypeList");
+        dataSet.put("language_name", "en");
         Log.d("TaxCollection", "" + dataSet);
         return dataSet;
     }
@@ -128,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
 
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
+                if (jsonObject.getString("STATUS").equalsIgnoreCase("SUCCESS") && jsonObject.getString("RESPONSE").equalsIgnoreCase("SUCCESS")) {
                     new Insert_TaxCollection().execute(jsonObject);
                 }
                 Log.d("TaxCollection", "" + jsonObject);
@@ -156,7 +154,7 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
                 JSONArray jsonArray = new JSONArray();
 
                 try {
-                    jsonArray = params[0].getJSONArray(AppConstant.JSON_DATA);
+                    jsonArray = params[0].getJSONArray("DATA");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,8 +162,9 @@ public class DashboardActivity extends AppCompatActivity implements Api.ServerRe
 
                     try {
                         Tax tax = new Tax();
-                        tax.setTaxId(jsonArray.getJSONObject(i).getString("id"));
-                        tax.setTaxName(jsonArray.getJSONObject(i).getString("tax"));
+                        tax.setTaxId(jsonArray.getJSONObject(i).getString("taxtypeid"));
+                        tax.setTaxName(jsonArray.getJSONObject(i).getString("taxtypedesc_en"));
+
                         taxList.add(tax);
                     } catch (JSONException e) {
                         e.printStackTrace();
