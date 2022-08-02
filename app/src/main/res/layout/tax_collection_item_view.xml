@@ -9,17 +9,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/layout_h"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:padding="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:weightSum="3">
                 <TextView
                     android:layout_width="0dp"
@@ -29,7 +29,7 @@
                     android:textStyle="bold"
                     android:id="@+id/fin_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp"/>
+                    android:textSize="@dimen/_13sdp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -38,7 +38,7 @@
                     android:textStyle="bold"
                     android:id="@+id/name_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp"/>
+                    android:textSize="@dimen/_13sdp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -47,28 +47,18 @@
                     android:textStyle="bold"
                     android:id="@+id/amount_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp"/>
+                    android:textSize="@dimen/_13sdp"/>
 
             </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:id="@+id/card_view"
-                android:layout_below="@+id/layout_h"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="@dimen/_7sdp"
-                app:cardElevation="@dimen/_7sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tax_layout"
-                    android:background="@drawable/corner_bottom_rect_bg">
+                    android:layout_below="@+id/layout_h"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/bottom_rect_bg">
 
 
                     <LinearLayout
@@ -88,8 +78,8 @@
                             android:text="2018-2020"
                             android:textStyle="bold"
                             android:id="@+id/fin"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textColor="@color/grey_7"
+                            android:textSize="@dimen/_12sdp"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -97,8 +87,8 @@
                             android:text="fir"
                             android:textStyle="bold"
                             android:id="@+id/name"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textColor="@color/grey_7"
+                            android:textSize="@dimen/_12sdp"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -106,8 +96,8 @@
                             android:text="@string/amount"
                             android:textStyle="bold"
                             android:id="@+id/amount"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textColor="@color/grey_7"
+                            android:textSize="@dimen/_12sdp"/>
 
                     </LinearLayout>
                     <ImageView
@@ -117,13 +107,12 @@
                         android:layout_below="@+id/layout"
                         android:layout_gravity="center_vertical"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:src="@drawable/ic_choose"
                         />
 
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
     </RelativeLayout>

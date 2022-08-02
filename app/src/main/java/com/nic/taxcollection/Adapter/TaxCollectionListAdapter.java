@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
+import com.nic.taxcollection.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -62,13 +63,79 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                 holder.layout_h.setVisibility(View.VISIBLE);
             }else {holder.layout_h.setVisibility(View.GONE);}
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   holder.check.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_accept));
+                    if(position == 0){
+                        if(taxArrayList.get(position).getPayStatus()== 0){
+                            Tax tax = taxArrayList.get(position);
+                            tax.setPayStatus(1);
+                            taxArrayList.set(position,tax);
+                            notifyDataSetChanged();
+                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                            if(taxArrayList.get(position+1).getPayStatus()== 0){
+                                Tax tax = taxArrayList.get(position);
+                                tax.setPayStatus(0);
+                                taxArrayList.set(position,tax);
+                                notifyDataSetChanged();
+                            }else {
+                                Utils.showAlert(activity,"You can't able to pay with pending year");
+                            }
+
+                        }
+                    }else if(position > 0 && position != taxArrayList.size()-1){
+                        if(taxArrayList.get(position).getPayStatus()== 0){
+                            if(taxArrayList.get(position-1).getPayStatus()== 1){
+                                Tax tax = taxArrayList.get(position);
+                                tax.setPayStatus(1);
+                                taxArrayList.set(position,tax);
+                                notifyDataSetChanged();
+                            }else {
+                                Utils.showAlert(activity,"Please select previous year");
+                            }
+
+                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                            if(taxArrayList.get(position+1).getPayStatus()== 0){
+                                Tax tax = taxArrayList.get(position);
+                                tax.setPayStatus(0);
+                                taxArrayList.set(position,tax);
+                                notifyDataSetChanged();
+                            }else {
+                                Utils.showAlert(activity,"You can't able to pay with pending year");
+                            }
+                        }
+
+                    }else if(position > 0 && position == taxArrayList.size()-1){
+
+                        if(taxArrayList.get(position).getPayStatus()== 0){
+                            if(taxArrayList.get(position-1).getPayStatus()== 1){
+                                Tax tax = taxArrayList.get(position);
+                                tax.setPayStatus(1);
+                                taxArrayList.set(position,tax);
+                                notifyDataSetChanged();
+                            }else {
+                                Utils.showAlert(activity,"You can't able to pay with pending year");
+                            }
+
+                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                                Tax tax = taxArrayList.get(position);
+                                tax.setPayStatus(0);
+                                taxArrayList.set(position,tax);
+                                notifyDataSetChanged();
+                        }
+                    }
+
+
+
                 }
             });
 
+            if(taxArrayList.get(position).getPayStatus()== 1){
+                holder.check.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_accept));
+            }else
+            {
+                holder.check.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_choose));
+            }
 
         } catch (Exception exp){
             exp.printStackTrace();

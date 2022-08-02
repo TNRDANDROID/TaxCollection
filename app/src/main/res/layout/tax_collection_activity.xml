@@ -5,7 +5,8 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg"
+    android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/bottom_corner_color_background"
         >
 
         <RelativeLayout
@@ -33,7 +34,7 @@
 
                     <ImageView
                         android:layout_centerVertical="true"
-                        android:id="@+id/refresh"
+                        android:id="@+id/back"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_alignParentStart="true"
@@ -118,16 +119,19 @@
         <LinearLayout
             android:layout_below="@+id/img_rll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_height="@dimen/_340sdp"
+            android:id="@+id/linear"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical">
 
             //Recyler_view
             <RelativeLayout
                 android:id="@+id/recy_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:padding="@dimen/_15sdp"
+                android:background="@drawable/corner_white_background"
                 android:gravity="center">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
@@ -137,7 +141,7 @@
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginBottom="0dp"
-                    android:scrollbarSize="1dp"
+                    android:scrollbarSize="0dp"
                     android:scrollbars="vertical"
                     android:visibility="visible" />
 
@@ -151,48 +155,47 @@
                     android:id="@+id/no_data_found"></TextView>
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:layout_alignParentBottom="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cash_pay"
-                        android:id="@+id/cash_pay"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_20sdp"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/black"
-                        android:layout_alignParentLeft="true"
-                        android:background="@drawable/corner_strong_rect_bg_all"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/online_pay"
-                        android:id="@+id/online_pay"
-                        android:layout_toRightOf="@+id/cash_pay"
-                        android:paddingLeft="@dimen/_20sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_20sdp"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/black"
-                        android:background="@drawable/corner_strong_rect_bg_all"/>
-
-                </RelativeLayout>
-
             </RelativeLayout>
 
-
         </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:gravity="center"
+        android:layout_below="@+id/linear"
+       >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_pay"
+            android:id="@+id/cash_pay"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/black"
+            android:background="@drawable/corner_strong_rect_bg_all"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/online_pay"
+            android:id="@+id/online_pay"
+            android:layout_toRightOf="@+id/cash_pay"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingRight="@dimen/_20sdp"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/black"
+            android:background="@drawable/corner_strong_rect_bg_all"/>
+
+    </RelativeLayout>
 
 
     </RelativeLayout>

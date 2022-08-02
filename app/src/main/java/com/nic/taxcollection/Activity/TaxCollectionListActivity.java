@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -63,6 +64,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ImageView back=findViewById(R.id.back);
 
         recyclerView=findViewById(R.id.recycler);
         no_data_found=findViewById(R.id.no_data_found);
@@ -75,16 +77,25 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setFocusable(false);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 //        getTaxCollection();
 
         JSONObject jsonObject = new JSONObject();
         taxList = new ArrayList<>();
         String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"fin\":\"2014-2015\",\"name\":\"first\",\"amount\":\"1000\"},{\"id\":2,\"fin\":\"2015-2016\",\"name\":\"sec\",\"amount\":\"3000\"},{\"id\":3,\"fin\":\"2016-2017\",\"name\":\"third\",\"amount\":\"6000\"},{\"id\":4,\"fin\":\"2017-2018\",\"name\":\"fourth\",\"amount\":\"8000\"}]}";
-        try {  jsonObject = new JSONObject(json); } catch (Throwable t) {
+        try {  jsonObject = new JSONObject(json);
+            new Insert_TaxCollection().execute(jsonObject);
+        } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
 
 
+/*
         try {
             if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
                 JSONArray jsonArray = new JSONArray();
@@ -113,6 +124,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
 
     }
 
@@ -189,6 +201,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
                         tax.setFin(jsonArray.getJSONObject(i).getString("fin"));
                         tax.setName(jsonArray.getJSONObject(i).getString("name"));
                         tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
+                        tax.setPayStatus(0);
                         taxList.add(tax);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -212,6 +225,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
             if(list.size()>0){
                 no_data_found.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                System.out.println("list size >>"+list.size());
             taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,list,TaxCollectionListActivity.this);
             recyclerView.setAdapter(taxListAdapter);
         }else {
