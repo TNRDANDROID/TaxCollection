@@ -8,11 +8,6 @@
             >
 
 
-            <corners android:topRightRadius="60dp"
-                android:bottomRightRadius="60dp"
-                android:bottomLeftRadius="60dp"
-                android:topLeftRadius="60dp"
-                />
 
 
             <gradient android:angle="0"

@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/bottom_corner_color_background"
+        android:background="@color/white"
         >
 
         <ScrollView
@@ -206,7 +206,9 @@
                     android:layout_below="@+id/linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/paid_amount_layout">
+                    android:id="@+id/paid_amount_layout"
+                    android:background="@drawable/cornered_curved_bg"
+                    android:padding="@dimen/_10sdp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -221,31 +223,58 @@
                             android:weightSum="4">
 
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Tax Type"/>
+                                android:text="Tax Type"
+                                android:textColor="@color/black"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Demand Selected"/>
+                                android:text="Demand Selected"
+                                android:textColor="@color/black"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Advance Available"/>
+                                android:text="Advance Available"
+                                android:textColor="@color/black"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Amount Payable"/>
+                                android:text="Amount Payable"
+                                android:textColor="@color/black"/>
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/grey_5"/>
                         <LinearLayout
+                            android:id="@+id/tax_type_layout"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -253,27 +282,46 @@
                             android:weightSum="4">
 
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:id="@+id/tax_type_text"
                                 android:text="Tax Type"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:id="@+id/property_demand_selected_amount"
                                 android:text="Demand Selected"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:id="@+id/property_advance_amount"
                                 android:text="Advance Available"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
                             <TextView
+                                android:padding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -281,13 +329,111 @@
                                 android:id="@+id/total_amount_payable"
                                 android:text="Amount Payable"/>
                         </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/grey_5"/>
+                        <LinearLayout
+                            android:id="@+id/swm_type_layout"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="4">
 
+                            <TextView
+                                android:padding="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Swm User Charge"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
+                            <TextView
+                                android:padding="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/swm_demand_selected_amount"
+                                android:text="Demand Selected"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
+                            <TextView
+                                android:padding="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/swm_advance_amount"
+                                android:text="Advance Available"/>
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey_5"/>
+
+                            <TextView
+                                android:padding="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/swm_amount_payable"
+                                android:text="Amount Payable"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/grey_5"/>
+                        <RelativeLayout
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/pay_amount_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true">
+                            <LinearLayout
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+                                <TextView
+                                    android:padding="@dimen/_5sdp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Payable"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_11sdp"/>
+                                <TextView
+                                    android:padding="@dimen/_5sdp"
+                                    android:layout_marginLeft="@dimen/_50sdp"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/amount"
+                                    android:textStyle="bold"
+                                    android:id="@+id/pay_amount_value"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_11sdp"/>
+
+                            </LinearLayout>
+                        </RelativeLayout>
                     </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/btn_layout"
-                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_below="@+id/paid_amount_layout"
