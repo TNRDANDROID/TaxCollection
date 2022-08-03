@@ -29,16 +29,16 @@
                     android:textStyle="bold"
                     android:id="@+id/fin_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp"/>
+                    android:textSize="@dimen/_11sdp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/name"
+                    android:text="@string/year"
                     android:textStyle="bold"
                     android:id="@+id/name_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp"/>
+                    android:textSize="@dimen/_11sdp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -47,7 +47,7 @@
                     android:textStyle="bold"
                     android:id="@+id/amount_h"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp"/>
+                    android:textSize="@dimen/_11sdp"/>
 
             </LinearLayout>
 
@@ -79,7 +79,7 @@
                             android:textStyle="bold"
                             android:id="@+id/fin"
                             android:textColor="@color/grey_7"
-                            android:textSize="@dimen/_12sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -88,7 +88,7 @@
                             android:textStyle="bold"
                             android:id="@+id/name"
                             android:textColor="@color/grey_7"
-                            android:textSize="@dimen/_12sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"
@@ -97,7 +97,7 @@
                             android:textStyle="bold"
                             android:id="@+id/amount"
                             android:textColor="@color/grey_7"
-                            android:textSize="@dimen/_12sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
 
                     </LinearLayout>
                     <ImageView

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nic.taxcollection.Interfcae.DemandItemClick;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
 import com.nic.taxcollection.utils.Utils;
@@ -27,11 +28,13 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
     private ArrayList<Tax> taxArrayList;
     LayoutInflater mInflater;
     private Context context;
+    DemandItemClick demandItemClick;
 
-    public TaxCollectionListAdapter(Activity activity, ArrayList<Tax> taxArrayList, Context context) {
+    public TaxCollectionListAdapter(Activity activity, ArrayList<Tax> taxArrayList, Context context,DemandItemClick demandItemClick) {
         this.activity=activity;
         this.taxArrayList=taxArrayList;
         this.context=context;
+        this.demandItemClick=demandItemClick;
         mInflater = LayoutInflater.from(activity);
     }
     @Override
@@ -52,16 +55,11 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-           /* if(position%2==0){
-                holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundpurple));
-            }
-            else  {
-                holder.tax_layout.setBackground(activity.getResources().getDrawable(R.drawable.cerclebackgroundyello));
-
-            }*/
-            holder.name.setText(taxArrayList.get(position).getName());
+            String year_name= taxArrayList.get(position).getFrom_month()+"-"+taxArrayList.get(position).getTo_month()+"-"
+                    +taxArrayList.get(position).getInstallment_group_name();
+            holder.name.setText(year_name);
             holder.fin.setText(taxArrayList.get(position).getFin());
-            holder.amount.setText(indianMoney(taxArrayList.get(position).getAmount()));
+            holder.amount.setText(taxArrayList.get(position).getDemand());
             if(position==0){
                 holder.layout_h.setVisibility(View.VISIBLE);
             }else {holder.layout_h.setVisibility(View.GONE);}
@@ -75,7 +73,8 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                             tax.setPayStatus(1);
                             taxArrayList.set(position,tax);
                             notifyDataSetChanged();
-                        }else if(taxArrayList.get(position).getPayStatus()== 1){
+                        }
+                        else if(taxArrayList.get(position).getPayStatus()== 1){
                             if(taxArrayList.get(position+1).getPayStatus()== 0){
                                 Tax tax = taxArrayList.get(position);
                                 tax.setPayStatus(0);
@@ -132,7 +131,7 @@ public class TaxCollectionListAdapter extends RecyclerView.Adapter<TaxCollection
                         }
                     }
 
-
+                    demandItemClick.demandItemClicked(taxArrayList);
 
                 }
             });

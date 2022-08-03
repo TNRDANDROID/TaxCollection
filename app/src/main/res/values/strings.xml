@@ -13,7 +13,7 @@
     <string name="password">Password</string>
     <string name="dashboard">Dashboard</string>
     <string name="assesment_number">Assesment Number</string>
-    <string name="enter_assesment_numbert">Enter Assesment Numbert</string>
+    <string name="enter_assesment_numbert">Enter Assessment Number</string>
     <string name="save">Save</string>
     <string name="submit">Submit</string>
     <string name="details">Tax Details</string>
@@ -32,4 +32,16 @@
     <string name="internet_connection_not_available">"Internet Connection is not available..Please Turn On Network Connection "</string>
     <string name="payment">Payment</string>
     <string name="reset">Reset</string>
+
+    <string name="water_connection_number">Water Connection Number</string>
+    <string name="fin_year">Financial Year</string>
+    <string name="lessee_number">Lessee Number</string>
+    <string name="trade_number">Trade Number</string>
+    <string name="select_fin_year">Select Fin Year</string>
+    <string name="door_number">Door Number</string>
+    <string name="building_licence_number">Building Licence Number</string>
+    <string name="ward_name">Ward Name</string>
+    <string name="habitation_name">Habitation Name</string>
+    <string name="street_name">Street Name</string>
+    <string name="year">Year</string>
 </resources>

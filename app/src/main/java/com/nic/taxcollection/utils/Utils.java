@@ -48,6 +48,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -1212,4 +1213,22 @@ public class Utils {
             return text;
         }
     }
+
+    public static String indianMoney(String amount){
+        String amount_value="";
+        try{
+            Locale locale = new Locale("en","IN");
+            DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getCurrencyInstance(locale);
+            DecimalFormatSymbols dfs = DecimalFormatSymbols.getInstance(locale);
+            dfs.setCurrencySymbol("\u20B9");
+            decimalFormat.setDecimalFormatSymbols(dfs);
+            System.out.println(decimalFormat.format(Integer.parseInt(amount)));
+            amount_value = decimalFormat.format(Integer.parseInt(amount));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return amount_value;
+    }
+
 }

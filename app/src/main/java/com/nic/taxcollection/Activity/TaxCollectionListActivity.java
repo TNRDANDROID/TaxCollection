@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.nic.taxcollection.Adapter.TaxCollectionListAdapter;
+import com.nic.taxcollection.Interfcae.DemandItemClick;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.api.Api;
 import com.nic.taxcollection.api.ApiService;
@@ -37,7 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class TaxCollectionListActivity extends AppCompatActivity implements Api.ServerResponseListener{
+public class TaxCollectionListActivity extends AppCompatActivity implements Api.ServerResponseListener, DemandItemClick {
 
 
     Context context;
@@ -46,12 +47,12 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
     public static DBHelper dbHelper;
     public static SQLiteDatabase db;
     public com.nic.taxcollection.dataBase.dbData dbData = new dbData(this);
-    ArrayList<Tax> taxList;
+    ArrayList<Tax> demandList;
     TaxCollectionListAdapter taxListAdapter;
     RecyclerView recyclerView;
-    TextView no_data_found,payment,reset;
+    TextView no_data_found,payment,reset,total_amount_value;
     SnapHelper snapHelper;
-
+    String property_available_advance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +72,10 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         no_data_found=findViewById(R.id.no_data_found);
         payment=findViewById(R.id.payment);
         reset=findViewById(R.id.reset);
-       /* RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(mLayoutManager);*/
+        total_amount_value=findViewById(R.id.total_amount_value);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-        //snapHelper = new PagerSnapHelper();
-        //snapHelper.attachToRecyclerView(recyclerView);
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -94,71 +94,11 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
                 startActivity(payment_option);
             }
         });
-//        getTaxCollection();
-
-        JSONObject jsonObject = new JSONObject();
-        taxList = new ArrayList<>();
-        String json = "{\"STATUS\":\"OK\",\"RESPONSE\":\"OK\",\"JSON_DATA\":[{\"id\":1,\"fin\":\"2014-2015\",\"name\":\"first\",\"amount\":\"1000\"},{\"id\":2,\"fin\":\"2015-2016\",\"name\":\"sec\",\"amount\":\"3000\"},{\"id\":3,\"fin\":\"2016-2017\",\"name\":\"third\",\"amount\":\"6000\"},{\"id\":4,\"fin\":\"2017-2018\",\"name\":\"fourth\",\"amount\":\"8000\"}]}";
-        try {  jsonObject = new JSONObject(json);
-            new Insert_TaxCollection().execute(jsonObject);
-        } catch (Throwable t) {
-            Log.e("My App", "Could not parse malformed JSON: \"" + json + "\""); }
-
-
-/*
-        try {
-            if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                JSONArray jsonArray = new JSONArray();
-                jsonArray=jsonObject.getJSONArray("JSON_DATA");
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    try {
-                        Tax tax = new Tax();
-                        tax.setId(jsonArray.getJSONObject(i).getString("id"));
-                        tax.setFin(jsonArray.getJSONObject(i).getString("fin"));
-                        tax.setName(jsonArray.getJSONObject(i).getString("name"));
-                        tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
-
-                        taxList.add(tax);
-                        Log.d("Size",""+taxList.size());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,taxList,TaxCollectionListActivity.this);
-                recyclerView.setAdapter(taxListAdapter);
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-*/
-
+        property_available_advance = getIntent().getStringExtra("property_available_advance");
+        setDemandAdapter();
     }
 
-    public  void getTaxCollection() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("TaxCollection", Api.Method.POST, UrlGenerator.getLoginUrl(), taxCollectionJsonParams(), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    public JSONObject taxCollectionJsonParams() throws JSONException {
-        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), taxCollectionParams().toString());
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
-        dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("TaxCollection", "" + dataSet);
-        return dataSet;
-    }
-    public JSONObject taxCollectionParams() throws JSONException {
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TaxCollection");
-        Log.d("TaxCollection", "" + dataSet);
-        return dataSet;
-    }
+
 
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
@@ -172,7 +112,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
 
                 if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                    new Insert_TaxCollection().execute(jsonObject);
+                    //new Insert_TaxCollection().execute(jsonObject);
                 }
                 Log.d("TaxCollection", "" + jsonObject);
             }
@@ -186,16 +126,47 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
 
     }
 
-    public class Insert_TaxCollection extends AsyncTask<JSONObject, Void, ArrayList<Tax>> {
+    private void setDemandAdapter(){
+        ArrayList<Tax> myList = (ArrayList<Tax>) getIntent().getSerializableExtra("DemandList");
+        demandList = new ArrayList<>();
+        demandList.addAll(myList);
+        if(demandList.size()>0){
+            no_data_found.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            System.out.println("list size >>"+demandList.size());
+            taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,demandList,TaxCollectionListActivity.this,this::demandItemClicked);
+            recyclerView.setAdapter(taxListAdapter);
+        }
+        else {
+            no_data_found.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void demandItemClicked(ArrayList<Tax> clickedList) {
+        try {
+            int total_amount=0;
+            for(int i=0;i<clickedList.size();i++){
+                if(clickedList.get(i).getPayStatus()==1){
+                    total_amount=total_amount+Math.round(Float.parseFloat(clickedList.get(i).getDemand()));
+                }
+            }
+            //total_amount = total_amount+Math.round(Float.parseFloat(property_available_advance));
+            total_amount_value.setText(Utils.indianMoney(String.valueOf(total_amount)));
+        }
+        catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    /*public class Insert_TaxCollection extends AsyncTask<JSONObject, Void, ArrayList<Tax>> {
 
         @Override
         protected ArrayList<Tax> doInBackground(JSONObject... params) {
-            dbData.open();
-
-            dbData.deleteTaxTable(); ;
-
             if (params.length > 0) {
-                taxList = new ArrayList<>();
+                demandList = new ArrayList<>();
                 JSONArray jsonArray = new JSONArray();
 
                 try {
@@ -212,7 +183,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
                         tax.setName(jsonArray.getJSONObject(i).getString("name"));
                         tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
                         tax.setPayStatus(0);
-                        taxList.add(tax);
+                        demandList.add(tax);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -224,7 +195,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
             }
 
 
-            return taxList;
+            return demandList;
 
 
         }
@@ -238,11 +209,12 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
                 System.out.println("list size >>"+list.size());
             taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,list,TaxCollectionListActivity.this);
             recyclerView.setAdapter(taxListAdapter);
-        }else {
+        }
+            else {
                 no_data_found.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
         }
-    }
+    }*/
 
 }
