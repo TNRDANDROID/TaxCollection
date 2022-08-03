@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nic.taxcollection.Activity.PaymentOption;
+import com.nic.taxcollection.Activity.TaxCollectionListActivity;
 import com.nic.taxcollection.R;
 import com.nic.taxcollection.model.Tax;
 
@@ -55,7 +55,7 @@ public class PaymentOptionAdapter extends RecyclerView.Adapter<PaymentOptionAdap
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((PaymentOption)context).adapterClickedPosition(position);
+                    ((TaxCollectionListActivity)context).adapterClickedPosition(position);
                 }
             });
 

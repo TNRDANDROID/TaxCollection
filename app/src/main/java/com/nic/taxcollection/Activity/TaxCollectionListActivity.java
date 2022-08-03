@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.nic.taxcollection.Adapter.PaymentOptionAdapter;
 import com.nic.taxcollection.Adapter.TaxCollectionListAdapter;
 import com.nic.taxcollection.Interfcae.DemandItemClick;
 import com.nic.taxcollection.R;
@@ -53,6 +57,9 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
     TextView no_data_found,payment,reset,total_amount_value;
     SnapHelper snapHelper;
     String property_available_advance;
+    ArrayList<Tax> paymentTypeList;
+    PaymentOptionAdapter paymentOptionAdapter;
+    RecyclerView recyclerViewPayment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +97,7 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent payment_option = new Intent(TaxCollectionListActivity.this,PaymentOption.class);
-                startActivity(payment_option);
+                showBottomSheetDialog();
             }
         });
         property_available_advance = getIntent().getStringExtra("property_available_advance");
@@ -106,16 +112,17 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
             JSONObject response = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
 
-            if ("TaxCollection".equals(urlType) && response != null) {
+            if ("PaymentTypeList".equals(urlType) && response != null) {
                 String key = response.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
 
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                    //new Insert_TaxCollection().execute(jsonObject);
+                if (jsonObject.getString("STATUS").equalsIgnoreCase("SUCCESS") && jsonObject.getString("RESPONSE").equalsIgnoreCase("SUCCESS")) {
+                    new Insert_PaymentTypeList().execute(jsonObject);
                 }
-                Log.d("TaxCollection", "" + jsonObject);
+                Log.d("PaymentTypeList", "" + jsonObject);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -124,6 +131,128 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
     @Override
     public void OnError(VolleyError volleyError) {
 
+    }
+
+    public void adapterClickedPosition(int pos){
+        String payment_mode = paymentTypeList.get(pos).getPaymenttype();
+        if(payment_mode.equals("Cash")){
+
+        }
+        else {
+            Intent goto_online_pay = new Intent(TaxCollectionListActivity.this,PaymentActivity.class);
+            startActivity(goto_online_pay);
+            finish();
+        }
+    }
+
+    public class Insert_PaymentTypeList extends AsyncTask<JSONObject, Void, ArrayList<Tax>> {
+
+        @Override
+        protected ArrayList<Tax> doInBackground(JSONObject... params) {
+
+            if (params.length > 0) {
+                paymentTypeList = new ArrayList<>();
+                JSONArray jsonArray = new JSONArray();
+
+                try {
+                    jsonArray = params[0].getJSONArray("DATA");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    try {
+                        Tax tax = new Tax();
+                        tax.setPaymenttypeid(jsonArray.getJSONObject(i).getString("paymenttypeid"));
+                        tax.setPaymenttype(jsonArray.getJSONObject(i).getString("paymenttype"));
+                        paymentTypeList.add(tax);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            }
+
+
+            return paymentTypeList;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Tax> list) {
+            super.onPostExecute(list);
+            if(list.size()>0){
+                ArrayList<Integer> paymentImgList = new ArrayList<>();
+                paymentImgList.add(R.drawable.cash_payment);
+                paymentImgList.add(R.drawable.qr_payment);
+                paymentImgList.add(R.drawable.card_payment);
+
+                recyclerViewPayment.setVisibility(View.VISIBLE);
+                paymentOptionAdapter = new PaymentOptionAdapter(TaxCollectionListActivity.this,list,paymentImgList,TaxCollectionListActivity.this);
+                recyclerViewPayment.setAdapter(paymentOptionAdapter);
+            }else {
+
+                recyclerViewPayment.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void showBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View contentView = View.inflate(getApplicationContext(), R.layout.bottom_sheet_dialog_layout, null);
+
+        bottomSheetDialog.setContentView(contentView);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from((View) contentView.getParent());
+        ((View) contentView.getParent()).setBackgroundColor(Color.TRANSPARENT);
+        if (mBottomSheetBehavior != null) {
+            mBottomSheetBehavior.setPeekHeight(700);
+            contentView.requestLayout();
+        }
+        recyclerViewPayment =bottomSheetDialog.findViewById(R.id.recycler_pay);
+
+        recyclerViewPayment.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        recyclerViewPayment.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewPayment.setHasFixedSize(true);
+        recyclerViewPayment.setNestedScrollingEnabled(false);
+        recyclerViewPayment.setFocusable(false);
+
+        if(Utils.isOnline()){
+            getPaymentTypeList();
+        }
+        else {
+            Utils.showAlert(TaxCollectionListActivity.this,"No Internet");
+        }
+
+        bottomSheetDialog.show();
+    }
+
+    public  void getPaymentTypeList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("PaymentTypeList", Api.Method.POST, UrlGenerator.getAppMainServiceUrl(), paymentTypeEncParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public JSONObject paymentTypeEncParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), paymentTypeNormalParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("PaymentTypeList", "" + dataSet);
+        return dataSet;
+    }
+    public JSONObject paymentTypeNormalParams() throws JSONException {
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "PaymentTypeList");
+        dataSet.put("role_code", prefManager.getRoleCode());
+        dataSet.put("language_name", "en");
+        Log.d("PaymentTypeList", "" + dataSet);
+        return dataSet;
     }
 
     private void setDemandAdapter(){
@@ -160,61 +289,5 @@ public class TaxCollectionListActivity extends AppCompatActivity implements Api.
         }
 
     }
-
-    /*public class Insert_TaxCollection extends AsyncTask<JSONObject, Void, ArrayList<Tax>> {
-
-        @Override
-        protected ArrayList<Tax> doInBackground(JSONObject... params) {
-            if (params.length > 0) {
-                demandList = new ArrayList<>();
-                JSONArray jsonArray = new JSONArray();
-
-                try {
-                    jsonArray = params[0].getJSONArray(AppConstant.JSON_DATA);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    try {
-                        Tax tax = new Tax();
-                        tax.setId(jsonArray.getJSONObject(i).getString("id"));
-                        tax.setFin(jsonArray.getJSONObject(i).getString("fin"));
-                        tax.setName(jsonArray.getJSONObject(i).getString("name"));
-                        tax.setAmount(jsonArray.getJSONObject(i).getString("amount"));
-                        tax.setPayStatus(0);
-                        demandList.add(tax);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-
-
-            }
-
-
-            return demandList;
-
-
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Tax> list) {
-            super.onPostExecute(list);
-            if(list.size()>0){
-                no_data_found.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                System.out.println("list size >>"+list.size());
-            taxListAdapter = new TaxCollectionListAdapter(TaxCollectionListActivity.this,list,TaxCollectionListActivity.this);
-            recyclerView.setAdapter(taxListAdapter);
-        }
-            else {
-                no_data_found.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            }
-        }
-    }*/
 
 }
