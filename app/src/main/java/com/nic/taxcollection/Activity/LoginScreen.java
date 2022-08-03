@@ -147,7 +147,7 @@ public class LoginScreen extends AppCompatActivity implements Api.ServerResponse
     }
 
     public void checkLoginScreen() {
-        user_name.setText("vpsec1@gmail.com");
+        user_name.setText("vpsec100@gmail.com");
         user_password.setText("test123#$");
         final String username = user_name.getText().toString().trim();
         final String password = user_password.getText().toString().trim();

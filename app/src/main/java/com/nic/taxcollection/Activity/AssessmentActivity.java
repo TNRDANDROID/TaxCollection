@@ -146,7 +146,7 @@ public class AssessmentActivity extends AppCompatActivity implements Api.ServerR
         number_title_text=findViewById(R.id.number_tv);
         number=findViewById(R.id.number);
 
-
+        view_details.setVisibility(View.GONE);
         /////Details Text Views
         district_name=findViewById(R.id.district);
         village_name=findViewById(R.id.village);
@@ -487,6 +487,7 @@ public class AssessmentActivity extends AppCompatActivity implements Api.ServerR
         protected void onPostExecute(Void void1) {
             super.onPostExecute(void1);
             details.setVisibility(View.VISIBLE);
+            view_details.setVisibility(View.VISIBLE);
 
             if(assessmentDetailsList.size()>0){
                 for(int i=0;i<assessmentDetailsList.size();i++){
